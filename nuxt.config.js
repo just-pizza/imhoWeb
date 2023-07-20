@@ -19,9 +19,17 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
-
+  mode: 'spa',
+  buildModules: ['@nuxtjs/axios'],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    // '@/plugins/axios.js',
+    // { src: '@/plugins/vuex-persist', ssr: false },
+    // '@/plugins/element-ui',
+    // '@/plugins/common-components',
+    // '@/plugins/new-line.js',
+    // '@/plugins/filter.js',
+    // '@/plugins/directive.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -33,6 +41,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

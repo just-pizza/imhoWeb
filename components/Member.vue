@@ -13,12 +13,13 @@
           <input type="text" id="cont" v-model="name" ref="cont" />
         </div>
         <div class="form-group email-group">
-          <label for="email">이메일:</label>
+          <label for="emailId">이메일:</label>
           <div class="email-input">
-            <input type="text" id="email" v-model="email" ref="email" />
+            <input type="text" id="emailId" v-model="emailId" ref="emailId" />
           </div>
           <div class="email-select">
-            <select v-model="emailDomain" @change="updateEmail">
+            <!-- <select v-model="emailDomain" @change="updateEmail"> -->
+            <select v-model="emailDomain" >
               <option value="" disabled selected>이메일 선택</option>
               <option value="gmail.com">gmail.com</option>
               <option value="yahoo.com">yahoo.com</option>
@@ -47,7 +48,7 @@ export default {
     return {
       userId: '',
       name: '',
-      email: '',
+      emailId: '',
       emailDomain: '',
     };
   },
@@ -59,17 +60,17 @@ export default {
       this.$emit('update:visible', false)
     },
      async postWrite() {
-      const completeEmail = this.email + (this.emailDomain ? '@' + this.emailDomain : '');
+      const completeEmail = this.emailId + (this.emailDomain ? '@' + this.emailDomain : '');
       const postText = {
         userId: this.userId,
         name: this.name,
         email: completeEmail,
       };
-      console.log('아이디 ::', this.userId)
-      console.log('비밀번호 ::', this.name)
-      console.log('이메일 ::', completeEmail)
+      console.log('아이디 ::', postText)
+    
       try {
         const res = await this.$axios.post('http://localhost:8081/api/imho/memberJoin', postText);
+        console.log(res)
         this.$emit('update:visible', false)
         console.log('this.visible ::',this.visible)
       } catch (error) {

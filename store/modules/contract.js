@@ -9,7 +9,18 @@ const contractStore = {
             state.contractObject = payload
         }
     },
-    actions: {}
+    actions: {
+
+        nuxtServerInit({ commit }, { req }) {
+            try {
+                // 서버 사이드에서 초기 데이터를 가져와서 상태에 설정
+                // const data = await fetchDataFromServer(req)
+                commit('setContractStore', contractObject)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+    }
 }
 
 export default contractStore

@@ -74,9 +74,7 @@ export default {
     },
      async comment() {
       try {
-        this.posts = []
-        
-        const res = await this.$axios.get('http://localhost:8081/api/imho/commentget');
+        const res = await this.$axios.get('http://localhost:8081/api/imho/commentget/'+ this.cmtpop.postId);
         console.log('res :: ', res)
         for(const o of res.data) {
             this.posts.push({
@@ -84,7 +82,6 @@ export default {
                 commentContent: o.commentContent
             })
         }
-        
       } catch (error) {
         console.error('Error fetching posts:', error);
       }

@@ -36,10 +36,10 @@ import axios from 'axios';
 
 export default {
   props: {
-    // visible: {
-    //   type: Boolean,
-    //   default: false
-    // },
+    visible: {
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     return {

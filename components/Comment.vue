@@ -5,7 +5,7 @@
     <label>{{cmtpop.userId}}</label>
     <label>{{cmtpop.article}}</label>
 
-    <div class="add-wrap">
+    <div v-if="contractObject?.name" class="add-wrap">
      
         <div class="form-group">
           <input type="text" id="commentContent" v-model="commentContent" ref="commentContent" />
@@ -74,6 +74,7 @@ export default {
     },
      async comment() {
       try {
+        this.posts = []
         const res = await this.$axios.get('http://localhost:8081/api/imho/commentget/'+ this.cmtpop.postId);
         console.log('res :: ', res)
         for(const o of res.data) {

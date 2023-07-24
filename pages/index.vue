@@ -57,6 +57,7 @@ export default {
       cont: '',
       cmtpop:{},
       postModal: false, 
+      postModal1: false, 
       memberModal: false,
       loginModal: false,
       commentModal: false,
@@ -69,9 +70,16 @@ export default {
   computed: {
     ...mapState('contractStore', ['contractObject']),
   },
+  watch: {
+    postModal:{
+      handler(newVal){
+        console.log('newVal ::', newVal)
+        this.test()
+      }
+    }
+  },
   mounted(){
     this.test()
-    console.log('this.contractObject :: ',this.contractObject)
   },
   methods: {
     ...mapMutations('contractStore', ['setContractStore']),
@@ -90,6 +98,7 @@ export default {
         // 게시물 목록 요청
         const res = await this.$axios.get('http://localhost:8081/api/imho/postget');
         console.log('res ::', res)
+        this.posts =[]
         for(const o of res.data){
           this.posts.push({
             article: o.article,

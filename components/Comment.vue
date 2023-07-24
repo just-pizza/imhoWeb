@@ -6,12 +6,12 @@
     <label>{{cmtpop.article}}</label>
 
     <div class="add-wrap">
-      <form>
+     
         <div class="form-group">
           <input type="text" id="commentContent" v-model="commentContent" ref="commentContent" />
-          <button class="btn btn-add" >등록</button>
+          <button class="btn btn-add" @click="addComment">등록</button>
         </div>
-      </form>
+      
     </div>
     
     <div class="btn-wrap">
@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios'
-import { mapMutations } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   props: {
@@ -46,18 +46,37 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapState('contractStore', ['contractObject']),
+  },
   mounted(){
     this.comment()
+    console.log('props test :: ', this.cmtpop)
   },
   methods: {
-    ...mapMutations('contractStore', ['setContractStore']),
 
     closeDialog() {
       this.$emit('update:visible', false)
     },
+    async addComment(){
+      const req = {
+        postId : this.cmtpop.postId,
+        commentContent: this.commentContent,
+        userId: this.contractObject.userId
+      }
+      console.log('rlasaknsckajbck ::', req)
+      try{
+        const res = await this.$axios.post('http://localhost:8081/api/imho/comment', req)
+        this.comment()
+      } catch(error){
+        console.error('Error fetching posts:', error);
+      }
+    },
      async comment() {
       try {
-        const res = await this.$axios.get('http://localhost:8081/api/imho/commentget/'+ this.cmtpop.postId);
+        this.posts = []
+        
+        const res = await this.$axios.get('http://localhost:8081/api/imho/commentget');
         console.log('res :: ', res)
         for(const o of res.data) {
             this.posts.push({

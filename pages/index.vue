@@ -82,7 +82,7 @@ export default {
     getPostData(clickData){
       
       this.cmtpop = clickData
-      console.log('clickData ::',this.cmtpop)
+      
       this.commentModal = true
     },
     async test() {

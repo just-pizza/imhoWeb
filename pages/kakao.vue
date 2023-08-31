@@ -40,10 +40,10 @@
         // 조회된 유저정보
         const info = {
           id: userInfo.data.id,
-          age: userInfo.data.kakao_account.age_range,
-          gender: userInfo.data.kakao_account.gender,
-          nickname: userInfo.data.properties.nickname,
-          profile_image: userInfo.data.properties.profile_image,
+          age: userInfo.data.kakao_account.age_range, //연령대
+          gender: userInfo.data.kakao_account.gender, // 성별
+          nickname: userInfo.data.properties.nickname, // 닉네임 
+          profile_image: userInfo.data.properties.profile_image, //프로필 사진
         }
         
         console.log(info)

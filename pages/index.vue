@@ -4,6 +4,7 @@
     <div >
       <button v-if="!contractObject?.name" class="btn btn-login" @click="loginModal = true">로그인</button>
       <button v-if="contractObject?.name" class="btn btn-logout" @click="logOutOn">로그아웃</button>
+      <button class="btn btn-kakao" @click="loginKakao">카카오</button>
       <button v-if="!contractObject?.name" class="btn btn-signup" @click="memberModal = true">회원가입</button>
     </div>
     <div class="post-list">
@@ -52,6 +53,10 @@ import Comment from '~/components/Comment.vue';
 import { mapState, mapMutations } from 'vuex'
 
 export default {
+  name: 'IndexPage',
+ 
+    
+  
   data() {
     return {
       cont: '',
@@ -80,10 +85,30 @@ export default {
   },
   mounted(){
     this.test()
+    // this.kakaoInit()
+    Kakao.isInitialized()
   },
   methods: {
     ...mapMutations('contractStore', ['setContractStore']),
 
+    loginKakao() {
+      Kakao.init('353abc84d6a04283ccf3754fcca1cac6')  // KaKao client key
+      Kakao.Auth.authorize({
+        //redirectUri: `${window.location.origin}/kakao`
+        redirectUri: `${window.location.origin}/kakao`
+      })
+      Kakao.isInitialized()
+    },
+
+    kakaoInit () {
+      Kakao.init('353abc84d6a04283ccf3754fcca1cac6')// KaKao client key
+      Kakao.isInitialized()
+    },
+    // async loginWithKakao () {
+    //   await Kakao.Auth.authorize({
+    //     redirectUri: `${window.location.origin}/kakao-callback`
+    //   })
+    // },
     logOutOn(){
       this.setContractStore()
     },
@@ -93,11 +118,33 @@ export default {
       
       this.commentModal = true
     },
+    async kakaoLogin(){
+      
+      try {
+        // code 유무 체크
+        if (!this.$route.query.code) {
+          console.log('111')
+          return this.$router.push('/')
+        }
+        console.log(`code : ${this.$route.query.code}`)
+        console.log('2')
+        // 카카오 로그인 요청
+        const body = {
+          code: this.$route.query.code,
+          domain: window.location.origin
+        }
+        const response = await this.$axios.$post('/login', body, {})
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+  
+    },
     async test() {
       try {
         // 게시물 목록 요청
         const res = await this.$axios.get('http://localhost:8081/api/imho/postget');
-        console.log('res ::', res)
+        //console.log('res ::', res)
         this.posts =[]
         for(const o of res.data){
           this.posts.push({
@@ -112,11 +159,11 @@ export default {
           })
         }
         // this.setContractStore(this.posts)
-        console.log('posts ::', this.posts)
+        // console.log('posts ::', this.posts)
       } catch (error) {
         console.error('Error fetching posts:', error);
       }
-    },
+    }
   },
 };
 </script>
@@ -262,6 +309,13 @@ textarea {
   margin-right: 10px;
   position: fixed;
   top: 20px;
+  right: 120px;
+}
+.btn-kakao {
+  background-color: #ffd400 ;
+  margin-right: 10px;
+  position: fixed;
+  top: 80px;
   right: 120px;
 }
 .btn-logout {

@@ -55,11 +55,8 @@ export default {
         article: this.cont,
         userId: 'ubsno3',
         commentsEnabled: this.commentsEnabled? 1:0, // Include commentsEnabled in the post data
-      };
-      console.log('제목 ::', this.subject);
-      console.log('내용 ::', this.cont);
-      console.log('댓글 가능 여부 ::', this.commentsEnabled? 1:0);
-      console.log('전체 ::', postText);
+      }
+      
       try{
         const res = await this.$axios.post('http://localhost:8081/api/imho/posts', postText)
         this.$emit('update:visible', false)
@@ -67,6 +64,7 @@ export default {
         console.error('Error fetching posts:', error);
       }
     },
+    
   },
 };
 </script>

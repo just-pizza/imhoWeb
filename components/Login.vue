@@ -35,7 +35,7 @@ export default {
       userId: '',
       name: '',
       email: '',
-      emailDomain: '',
+      emailDomain: ''
     };
   },
   mounted(){
@@ -59,9 +59,9 @@ export default {
         console.log('res :: ', res)
         if( res.data === true){
             this.setContractStore(req)
-            console.log('reqreq1 ::',req)
+            
             this.$emit('update:visible', false)
-            console.log('this.visible ::',this.visible)
+            
         } else{
            
         }

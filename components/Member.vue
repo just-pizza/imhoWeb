@@ -66,8 +66,8 @@ export default {
         name: this.name,
         email: completeEmail,
       };
-      console.log('아이디 ::', postText)
-    
+      console.log('아이디 ::', postText) // 
+
       try {
         const res = await this.$axios.post('http://localhost:8081/api/imho/memberJoin', postText);
         console.log(res)
